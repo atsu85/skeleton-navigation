@@ -1,4 +1,5 @@
 System.config({
+  "globalEvaluationScope": false, /* supposed to fix error with enabled Firebug (with Firefox) and IE devtools - https://github.com/systemjs/systemjs/issues/814#issuecomment-149136800 */
   "defaultJSExtensions": true,
   "transpiler": "babel",
   "babelOptions": {
