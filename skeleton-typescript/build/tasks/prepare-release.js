@@ -33,6 +33,7 @@ gulp.task('prepare-release', function(callback) {
   return runSequence(
     'build',
     'lint',
+    'lint-templates',
     'bump-version',
     'changelog',
     callback
