@@ -24,14 +24,28 @@
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
     <script>
-      // everything else except "aurelia-bootstrapper" is required for IE9
-      SystemJS.import("raf/polyfill").then(function() {
-        return SystemJS.import("aurelia-polyfills");
-      }).then(function() {
-        return System.import("polymer/mutationobservers");
-      }).then(function() {
+      // returns null for IE 11
+      function getIEVersion() {
+        var ua = navigator.userAgent.toLowerCase();
+        return (ua.indexOf('msie') != -1) ? parseInt(ua.split('msie')[1]) : null;
+      }
+      var ieVer = getIEVersion();
+      if (!ieVer || ieVer > 9) {
         SystemJS.import("aurelia-bootstrapper");
-      });
+      } else {
+        if (ieVer === 9) {
+          // everything else except "aurelia-bootstrapper" is required for IE9
+          SystemJS.import("raf/polyfill").then(function () {
+            return SystemJS.import("aurelia-polyfills");
+          }).then(function () {
+            return System.import("polymer/mutationobservers");
+          }).then(function () {
+            SystemJS.import("aurelia-bootstrapper");
+          });
+        } else {
+          alert("Application works with evergreen browsers (Chrome, FireFox, MS Edge) and Internet Exploreri version 9 and newer. Detected IE version " + ieVer);
+        }
+      }
     </script>
   </body>
 </html>
